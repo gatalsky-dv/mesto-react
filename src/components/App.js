@@ -1,41 +1,18 @@
-import logo from './logo.svg';
-import './index.css';
+import logo from '../logo.svg';
+import '../index.css';
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js';
 
-function App() {
+export default function App() {
   return (
-      <body className="page">
+    <body className="page">
 
-      <header className="header">
-        <a href="#" className="header__logo"></a>
-      </header>
+      <Header />
 
-      <main className="content">
+      <Main />
 
-        <section className="profile">
-          <div className="profile__avatar">
-            <img src="<%=require('./images/Avatar.png')%>" alt="Аватарка" className="profile__image" />
-          </div>
-          <div className="profile__form">
-            <div className="profile__info">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
-              <button aria-label="Редактировать" type="button" className="profile__edit"></button>
-            </div>
-            <p className="profile__description">Исследователь океана</p>
-          </div>
-          <button aria-label="Добавить" type="button" className="profile__add">
-          </button>
-
-        </section>
-
-        <section className="elements">
-
-        </section>
-
-      </main>
-
-      <footer className="footer">
-        <p className="footer__text">&copy; 2022 Mesto Russia</p>
-      </footer>
+      <Footer />
 
       <div className="popup popup_user">
         <div className="popup__container">
@@ -100,7 +77,7 @@ function App() {
       <div className="popup popup_image">
         <div className="popup__pic">
           <button aria-label="Закрыть" type="button" className="popup__close popup__close_image"></button>
-          <img src="#" alt="" className="popup__img" />
+          <img src="src/components/App#" alt="" className="popup__img" />
             <p className="popup__text"></p>
         </div>
       </div>
@@ -149,5 +126,3 @@ function App() {
       </body>
   );
 }
-
-export default App;
