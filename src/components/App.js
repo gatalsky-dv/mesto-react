@@ -1,114 +1,71 @@
-import logo from '../logo.svg';
-import '../index.css';
+// import logo from '../images/logo.svg';
+import React, { useState } from 'react';
+import '../pages/index.css';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
+import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
 
 export default function App() {
+  function handleEditAvatarClick() {
+    document.querySelector('.popup_avatar').classList.add('popup_opened');
+  }
+  
+  function handleEditProfileClick() {
+    document.querySelector('.popup_user').classList.add('popup_opened');
+  }
+  
+  function handleAddPlaceClick() {
+    document.querySelector('.popup_card').classList.add('popup_opened');
+  }
+
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+  
   return (
     <body className="page">
-
       <Header />
-
-      <Main />
-
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
       <Footer />
-
-      <div className="popup popup_user">
-        <div className="popup__container">
-          <button aria-label="Закрыть" type="button" className="popup__close popup__close_user"></button>
-          <h3 className="popup__title">Редактировать профиль</h3>
-          <form name="profile" method="get" className="popup__form popup__form_user" noValidate>
-            <input
-                type="text"
-                className="popup__input popup__input_value_name"
-                id="name-input"
-                name="user"
-                placeholder="Имя позьзователя"
-                required
-                minLength="2"
-                maxLength="40"
-            />
-              <span className="name-input-error"></span>
-              <input
-                  type="text"
-                  className="popup__input popup__input_value_job"
-                  id="job-input"
-                  name="job"
-                  placeholder="О себе"
-                  required
-                  minLength="2"
-                  maxLength="200"
-              />
-                <span className="job-input-error"></span>
-                <button type="submit" className="popup__button">Сохранить</button>
-          </form>
-        </div>
-      </div>
-      <div className="popup popup_card">
-        <div className="popup__container">
-          <button aria-label="Закрыть" type="button" className="popup__close popup__close_card"></button>
-          <h3 className="popup__title">Новое место</h3>
-          <form name="card" className="popup__form popup__form_card" noValidate>
-            <input
-                type="text"
-                className="popup__input popup__input_value_title"
-                id="title-input"
-                name="name"
-                placeholder="Название"
-                required
-                minLength="2"
-                maxLength="30"
-            />
-              <span className="title-input-error"></span>
-              <input
-                  type="url"
-                  className="popup__input popup__input_value_link"
-                  id="link-input"
-                  name="link"
-                  placeholder="Ссылка на картинку"
-                  required
-              />
-                <span className="link-input-error"></span>
-                <button type="submit" className="popup__button">Создать</button>
-          </form>
-        </div>
-      </div>
-      <div className="popup popup_image">
-        <div className="popup__pic">
-          <button aria-label="Закрыть" type="button" className="popup__close popup__close_image"></button>
-          <img src="src/components/App#" alt="" className="popup__img" />
-            <p className="popup__text"></p>
-        </div>
-      </div>
-      <div className="popup popup_avatar">
-        <div className="popup__container popup__container_avatar">
-          <button aria-label="Закрыть" type="button" className="popup__close popup__close_avatar"></button>
-          <h3 className="popup__title">Обновить аватар</h3>
-          <form name="avatar-edit" className="popup__form popup__form_avatar" noValidate>
-            <input
-                type="url"
-                className="popup__input popup__input_value_link"
-                id="avatar-input"
-                name="avatar"
-                placeholder="Ссылка на аватарку"
-                required
-            />
-              <span className="avatar-input-error"></span>
-              <button type="submit" className="popup__button">Сохранить</button>
-          </form>
-        </div>
-      </div>
-      <div className="popup popup_confirmation">
-        <div className="popup__container popup__container_confirmation">
-          <button aria-label="Закрыть" type="button" className="popup__close popup__close_confirmation"></button>
-          <h3 className="popup__title popup__title_confirmation">Вы уверены?</h3>
-          <form name="card-delete" className="popup__form popup__form_confirmation" noValidate>
-            <button type="submit" className="popup__button popup__button_confirmation">Да</button>
-          </form>
-        </div>
-      </div>
-
+      <PopupWithForm
+        name='user'
+        title='Редактировать профиль'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      />
+      <PopupWithForm
+        name='card'
+        title='Новое место'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      />
+      <PopupWithForm
+        name='avatar'
+        title='Обновить аватар'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      />
+      <PopupWithForm
+        name='confirmation'
+        title='Вы уверены?'
+        // isOpen={}
+        // onClose={}
+      />
+      
+      <ImagePopup />
+      
       <template id="element-template">
         <article className="element">
           <img className="element__maskgroup" />
