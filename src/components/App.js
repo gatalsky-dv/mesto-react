@@ -1,6 +1,6 @@
 // import logo from '../images/logo.svg';
 import React, { useState } from 'react';
-import '../pages/index.css';
+import '../index.css';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -28,10 +28,11 @@ export default function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    console.log('работает');
   }
   
   return (
-    <body className="page">
+    <div className="page">
       <Header />
       <Main
         onEditProfile={handleEditProfileClick}
@@ -80,6 +81,6 @@ export default function App() {
         </article>
       </template>
 
-      </body>
+      </div>
   );
 }
