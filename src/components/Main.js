@@ -1,4 +1,5 @@
 import React from 'react';
+import Api from '../utils/Api.js';
 
 export default function Main(props) {
 	
@@ -19,11 +20,9 @@ export default function Main(props) {
 				</div>
 				<button aria-label="Добавить" type="button" className="profile__add" onClick={props.onAddPlace}>
 				</button>
-			
 			</section>
 			
 			<section className="elements">
-			
 			</section>
 		
 		</main>
