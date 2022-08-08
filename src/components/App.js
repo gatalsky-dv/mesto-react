@@ -128,21 +128,12 @@ export default function App() {
         // onClose={}
       />
       
-      <ImagePopup />
+      <ImagePopup
       
-      <template id="element-template">
-        <article className="element">
-          <img className="element__maskgroup" />
-            <button type="button" className="element__trash"></button>
-            <div className="element__caption">
-              <h2 className="element__name"></h2>
-              <div className="element__likes">
-                <button type="button" className="element__heart"></button>
-                <p className="element__counter"></p>
-              </div>
-            </div>
-        </article>
-      </template>
+      
+      />
+      
+      
 
       </div>
   );

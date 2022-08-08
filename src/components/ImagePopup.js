@@ -1,6 +1,6 @@
 import '../index.css';
 
-export default function ImagePopup() {
+export default function ImagePopup(props) {
 	return (
 		<div className="popup popup_image">
 			<div className="popup__pic">
