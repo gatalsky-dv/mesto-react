@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import api from '../utils/Api.js';
-import App from './App';
 import Card from './Card'
 
 export default function Main(props) {
@@ -50,7 +49,7 @@ export default function Main(props) {
 							name={data.name}
 							link={data.link}
 							likes={data.likes.length}
-							// onCardClick={onCardClick}
+							onCardClick={props.onCardClick}
 						/>
 				)})}
 			</section>

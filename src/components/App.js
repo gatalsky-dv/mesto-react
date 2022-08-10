@@ -1,5 +1,5 @@
 // import logo from '../images/logo.svg';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import '../index.css';
 import Header from './Header.js';
 import Main from './Main.js';
@@ -8,133 +8,148 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 
 export default function App() {
-  
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  
-  function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
-  }
-  
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
-  }
-  
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-  }
-  
-  return (
-    <div className="page">
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-      />
-      <Footer />
-      <PopupWithForm
-        name='user'
-        title='Редактировать профиль'
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        children = {
-          <>
-          <input
-            type="text"
-            className="popup__input popup__input_value_name"
-            id="name-input"
-            name="user"
-            placeholder="Имя позьзователя"
-            required
-            minLength="2"
-            maxLength="40"
-          />
-          <span className="name-input-error"></span>
-          <input
-            type="text"
-            className="popup__input popup__input_value_job"
-            id="job-input"
-            name="job"
-            placeholder="О себе"
-            required
-            minLength="2"
-            maxLength="200"
-          />
-          <span className="job-input-error"></span>
-          </>
-        }
-      />
-      <PopupWithForm
-        name='card'
-        title='Новое место'
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        children = {
-          <>
-            <input
-              type="text"
-              className="popup__input popup__input_value_title"
-              id="title-input"
-              name="name"
-              placeholder="Название"
-              required
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="title-input-error"></span>
-            <input
-              type="url"
-              className="popup__input popup__input_value_link"
-              id="link-input"
-              name="link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="link-input-error"></span>
-          </>
-        }
-      />
-      <PopupWithForm
-        name='avatar'
-        title='Обновить аватар'
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        children ={
-          <>
-            <input
-              type="url"
-              className="popup__input popup__input_value_link"
-              id="avatar-input"
-              name="avatar"
-              placeholder="Ссылка на аватарку"
-              required
-            />
-            <span className="avatar-input-error"></span>
-          </>
-        }
-      />
-      <PopupWithForm
-        name='confirmation'
-        title='Вы уверены?'
-        // isOpen={}
-        // onClose={}
-      />
-      
-      <ImagePopup
-      
-      
-      />
-      
-      
-
-      </div>
-  );
+	
+	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+	const [selectedCard, setSelectedCard] = useState(null);
+	
+	const handleEscClose = (evt) => {
+		if (evt.key === 'Escape') {
+			closeAllPopups();
+		}
+	}
+	
+	function handleEditProfileClick() {
+		setIsEditProfilePopupOpen(true);
+		document.addEventListener('keydown', handleEscClose);
+	}
+	
+	function handleAddPlaceClick() {
+		setIsAddPlacePopupOpen(true);
+		document.addEventListener('keydown', handleEscClose);
+	}
+	
+	function handleEditAvatarClick() {
+		setIsEditAvatarPopupOpen(true);
+		document.addEventListener('keydown', handleEscClose);
+	}
+	
+	function handleCardClick(card) {
+		setSelectedCard(card);
+		document.addEventListener('keydown', handleEscClose);
+	}
+	
+	function closeAllPopups() {
+		setIsEditProfilePopupOpen(false);
+		setIsAddPlacePopupOpen(false);
+		setIsEditAvatarPopupOpen(false);
+		setSelectedCard(null);
+	}
+	
+	return (
+		<div className="page">
+			<Header/>
+			<Main
+				onEditProfile={handleEditProfileClick}
+				onAddPlace={handleAddPlaceClick}
+				onEditAvatar={handleEditAvatarClick}
+				onCardClick={handleCardClick}
+			/>
+			<Footer/>
+			<PopupWithForm
+				name='user'
+				title='Редактировать профиль'
+				isOpen={isEditProfilePopupOpen}
+				onClose={closeAllPopups}
+				children={
+					<>
+						<input
+							type="text"
+							className="popup__input popup__input_value_name"
+							id="name-input"
+							name="user"
+							placeholder="Имя позьзователя"
+							required
+							minLength="2"
+							maxLength="40"
+						/>
+						<span className="name-input-error"></span>
+						<input
+							type="text"
+							className="popup__input popup__input_value_job"
+							id="job-input"
+							name="job"
+							placeholder="О себе"
+							required
+							minLength="2"
+							maxLength="200"
+						/>
+						<span className="job-input-error"></span>
+					</>
+				}
+			/>
+			<PopupWithForm
+				name='card'
+				title='Новое место'
+				isOpen={isAddPlacePopupOpen}
+				onClose={closeAllPopups}
+				children={
+					<>
+						<input
+							type="text"
+							className="popup__input popup__input_value_title"
+							id="title-input"
+							name="name"
+							placeholder="Название"
+							required
+							minLength="2"
+							maxLength="30"
+						/>
+						<span className="title-input-error"></span>
+						<input
+							type="url"
+							className="popup__input popup__input_value_link"
+							id="link-input"
+							name="link"
+							placeholder="Ссылка на картинку"
+							required
+						/>
+						<span className="link-input-error"></span>
+					</>
+				}
+			/>
+			<PopupWithForm
+				name='avatar'
+				title='Обновить аватар'
+				isOpen={isEditAvatarPopupOpen}
+				onClose={closeAllPopups}
+				children={
+					<>
+						<input
+							type="url"
+							className="popup__input popup__input_value_link"
+							id="avatar-input"
+							name="avatar"
+							placeholder="Ссылка на аватарку"
+							required
+						/>
+						<span className="avatar-input-error"></span>
+					</>
+				}
+			/>
+			<PopupWithForm
+				name='confirmation'
+				title='Вы уверены?'
+				// isOpen={}
+				// onClose={}
+			/>
+			<ImagePopup
+				name='image'
+				card={selectedCard}
+				isOpen={!!selectedCard}
+				onClose={closeAllPopups}
+			/>
+		</div>
+	);
 }
