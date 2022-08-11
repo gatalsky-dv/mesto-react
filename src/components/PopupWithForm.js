@@ -9,7 +9,7 @@ export default function PopupWithForm(props) {
 				<h3 className="popup__title">{props.title}</h3>
 				<form name="profile" method="get" className={`popup__form popup__form_${props.name}`} noValidate>
 					{props.children}
-					<button type="submit" className="popup__button">Сохранить</button>
+					<button type="submit" className="popup__button">{props.buttonText}</button>
 				</form>
 			</div>
 		</div>
