@@ -57,9 +57,9 @@ class Api {
       .then(res => this._сheckResponseData(res));
   }
 
-  showLikesCard(cardId, method) {
+  showLikesCard(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: method,
+      method: isLiked ? 'DELETE' : 'PUT',
       headers: this._headers,
     })
       .then(res => this._сheckResponseData(res));

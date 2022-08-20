@@ -39,6 +39,35 @@ export default function App() {
 	}, []);
 	
 	
+	function handleCardLike(card) {
+		// снова проверяем, есть ли уже лайк на этой карточке
+		const isLiked = card.likes.some( i => i._id === currentUser._id );
+		
+		// отправляем запрос в API и получаем обновленные данные карточки
+		api.showLikesCard( card._id, isLiked )
+			.then((newCard) => { //форматируем новый массив на основе имеющегося, подставляя в него новую карточку
+				const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+				//обновляем стейт
+				setCards(newCards);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	
+	function handleCardDelete(card) {
+		// снова проверяем, являемся ли мы владельцем карточки
+		const isOwn = card.owner._id === currentUser._id;
+		
+		api.deleteCard( card._id )
+			.then((newCard) => {
+				const newCards = cards.map((c) => c._id )
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	
 	const handleEscClose = (evt) => {
 		if (evt.key === 'Escape') {
 			closeAllPopups();
@@ -82,6 +111,8 @@ export default function App() {
 					onEditAvatar={handleEditAvatarClick}
 					onCardClick={handleCardClick}
 					cards={cards}
+					onCardLike={handleCardLike}
+					onCardDelete={handleCardDelete}
 				/>
 				<Footer/>
 				<PopupWithForm
