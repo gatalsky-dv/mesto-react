@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/Api.js";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 export default function App() {
 	
@@ -44,7 +45,7 @@ export default function App() {
 		const isLiked = card.likes.some( i => i._id === currentUser._id );
 		
 		// отправляем запрос в API и получаем обновленные данные карточки
-		api.showLikesCard( card._id, isLiked )
+		api.showLikesCard(card._id, isLiked)
 			.then((newCard) => { //форматируем новый массив на основе имеющегося, подставляя в него новую карточку
 				const newCards = cards.map((c) => c._id === card._id ? newCard : c);
 				//обновляем стейт
@@ -59,13 +60,22 @@ export default function App() {
 		// снова проверяем, являемся ли мы владельцем карточки
 		const isOwn = card.owner._id === currentUser._id;
 		
-		api.deleteCard( card._id )
+		api.deleteCard(card._id)
 			.then((newCard) => {
 				const newCards = cards.map((c) => c._id )
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+	}
+	console.log(currentUser);
+	function handleUpdateUser(name, about) {
+		api.editProfile(name, about)
+			.then((name, about) => {
+				setCurrentUser(name, about);
+			})
+			.catch((err) => console.log(err))
+			.finally(() => closeAllPopups());
 	}
 	
 	const handleEscClose = (evt) => {
@@ -115,36 +125,10 @@ export default function App() {
 					onCardDelete={handleCardDelete}
 				/>
 				<Footer/>
-				<PopupWithForm
-					name='user'
-					title='Редактировать профиль'
+				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
-					buttonText='Сохранить'
-				>
-					<input
-						type="text"
-						className="popup__input popup__input_value_name"
-						id="name-input"
-						name="user"
-						placeholder="Имя позьзователя"
-						required
-						minLength="2"
-						maxLength="40"
-					/>
-					<span className="name-input-error"></span>
-					<input
-						type="text"
-						className="popup__input popup__input_value_job"
-						id="job-input"
-						name="job"
-						placeholder="О себе"
-						required
-						minLength="2"
-						maxLength="200"
-					/>
-					<span className="job-input-error"></span>
-				</PopupWithForm>
+				/>
 				<PopupWithForm
 					name='card'
 					title='Новое место'
