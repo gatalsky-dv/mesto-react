@@ -31,7 +31,7 @@ export default function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardCl
 							onCardClick={onCardClick}
 							onCardLike={onCardLike}
 							onCardDelete={onCardDelete}
-							// key={card._id}
+							key={card._id}
 							card={card}
 						/>
 					)

@@ -16,7 +16,7 @@ export default function App() {
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(null);
 	
-	const [currentUser, setCurrentUser] = useState();
+	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	
 	useEffect(() => {
@@ -68,14 +68,15 @@ export default function App() {
 				console.log(err);
 			});
 	}
-	console.log(currentUser);
-	function handleUpdateUser(name, about) {
+	console.dir( currentUser.name);
+	function handleUpdateUser( name, about ) {
+		
 		api.editProfile(name, about)
-			.then((name, about) => {
-				setCurrentUser(name, about);
+			.then((res) => {
+				setCurrentUser(res);
+				closeAllPopups();
 			})
 			.catch((err) => console.log(err))
-			.finally(() => closeAllPopups());
 	}
 	
 	const handleEscClose = (evt) => {
@@ -128,13 +129,14 @@ export default function App() {
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
+					onUpdateUser={handleUpdateUser}
 				/>
 				<PopupWithForm
-					name='card'
-					title='Новое место'
+					name="card"
+					title="Новое место"
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
-					buttonText='Создать'
+					buttonText="Создать"
 				>
 					<input
 						type="text"

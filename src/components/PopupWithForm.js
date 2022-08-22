@@ -1,5 +1,4 @@
 import React from "react";
-import EditProfilePopup from "./EditProfilePopup";
 
 export default function PopupWithForm({ name, title, isOpen, onClose, buttonText, children, handleSubmit }) {
 
@@ -8,9 +7,9 @@ export default function PopupWithForm({ name, title, isOpen, onClose, buttonText
 			<div className='popup__container' onClick={(event) => {event.stopPropagation()}}>
 				<button aria-label="Закрыть" type="button" className={`popup__close popup__close_${name}`} onClick={onClose} />
 				<h3 className="popup__title">{title}</h3>
-				<form name="profile" method="get" className={`popup__form popup__form_${name}`} noValidate onSubmit={handleSubmit}>
+				<form name="profile" method="get" className={`popup__form popup__form_${name}`} noValidate onSubmit={handleSubmit} >
 					{children}
-					<button type="submit" className="popup__button" >{buttonText}</button>
+					<button type="submit" className="popup__button">{buttonText}</button>
 				</form>
 			</div>
 		</div>
