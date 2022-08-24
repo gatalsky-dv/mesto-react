@@ -5,28 +5,29 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 	const currentUser = useContext(CurrentUserContext);
 	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
+	const [about, setAbout] = useState('');
 	
 	const handleNameChange = (e) => {
 		setName(e.target.value);
 	};
 
-	const handleDescriptionChange = (e) => {
-		setDescription(e.target.value);
+	const handleAboutChange = (e) => {
+		setAbout(e.target.value);
 	};
 	
 	function handleSubmit(e) {
 		e.preventDefault();
+		// Передаём значения управляемых компонентов во внешний обработчик
 		onUpdateUser({
 			name,
-			about: description,
+			about
 		});
 	}
 	
 	useEffect(() => {
 		if (currentUser.name && currentUser.about) {
 			setName(currentUser.name);
-			setDescription(currentUser.about);
+			setAbout(currentUser.about);
 		}
 	}, [currentUser]);
 	
@@ -56,13 +57,13 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 				type="text"
 				className="popup__input popup__input_value_job"
 				id="job-input"
-				name="description"
+				name="about"
 				placeholder="О себе"
 				required
 				minLength="2"
 				maxLength="200"
-				value={description}
-				onChange={handleDescriptionChange}
+				value={about}
+				onChange={handleAboutChange}
 			/>
 			<span className="job-input-error"></span>
 		</PopupWithForm>

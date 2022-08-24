@@ -56,22 +56,18 @@ export default function App() {
 			});
 	}
 	
-	function handleCardDelete(card) {
-		// снова проверяем, являемся ли мы владельцем карточки
-		const isOwn = card.owner._id === currentUser._id;
-		
-		api.deleteCard(card._id)
-			.then((newCard) => {
-				const newCards = cards.map((c) => c._id )
+	function handleCardDelete(cardId) {
+		api.deleteCard(cardId._id)
+			.then((res) => {
+				setCards(cards.filter(card => card._id !== cardId._id))
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}
-	console.dir( currentUser.name);
-	function handleUpdateUser( name, about ) {
-		
-		api.editProfile(name, about)
+	
+	function handleUpdateUser({name, about}) {
+		api.editProfile({name, about})
 			.then((res) => {
 				setCurrentUser(res);
 				closeAllPopups();
