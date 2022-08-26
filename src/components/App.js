@@ -8,6 +8,7 @@ import ImagePopup from "./ImagePopup.js";
 import api from "../utils/Api.js";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 export default function App() {
 	
@@ -68,6 +69,15 @@ export default function App() {
 	
 	function handleUpdateUser({name, about}) {
 		api.editProfile({name, about})
+			.then((res) => {
+				setCurrentUser(res);
+				closeAllPopups();
+			})
+			.catch((err) => console.log(err))
+	}
+	
+	function handleUpdateAvatar({avatar}) {
+		api.updateAvatar({avatar})
 			.then((res) => {
 				setCurrentUser(res);
 				closeAllPopups();
@@ -156,23 +166,12 @@ export default function App() {
 					<span className="link-input-error"></span>
 				</PopupWithForm>
 				
-				<PopupWithForm
-					name="avatar"
-					title="Обновить аватар"
+				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					onClose={closeAllPopups}
-					buttonText="Сохранить"
-				>
-					<input
-						type="url"
-						className="popup__input popup__input_value_link"
-						id="avatar-input"
-						name="avatar"
-						placeholder="Ссылка на аватарку"
-						required
-					/>
-					<span className="avatar-input-error"></span>
-				</PopupWithForm>
+					onUpdateAvatar={handleUpdateAvatar}
+				/>
+
 				<PopupWithForm
 					name="confirmation"
 					title="Вы уверены?"
