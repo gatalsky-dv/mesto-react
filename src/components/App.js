@@ -127,6 +127,22 @@ export default function App() {
 		setSelectedCard(null);
 	}
 	
+	const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard
+	
+	useEffect(() => {
+		function closeByEscape(e) {
+			if(e.key === 'Escape') {
+				closeAllPopups();
+			}
+		}
+		if(isOpen) {
+			document.addEventListener('keydown', closeByEscape);
+			return () => {
+				document.removeEventListener('keydown', closeByEscape);
+			}
+		}
+	}, [isOpen]);
+	
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className="page">
