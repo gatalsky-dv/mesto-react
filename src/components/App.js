@@ -9,6 +9,7 @@ import api from "../utils/Api.js";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlaceSubmit";
 
 export default function App() {
 	
@@ -16,7 +17,6 @@ export default function App() {
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(null);
-	
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	
@@ -76,10 +76,19 @@ export default function App() {
 			.catch((err) => console.log(err))
 	}
 	
-	function handleUpdateAvatar({avatar}) {
-		api.updateAvatar({avatar})
+	function handleUpdateAvatar(avatar) {
+		api.updateAvatar(avatar)
 			.then((res) => {
 				setCurrentUser(res);
+				closeAllPopups();
+			})
+			.catch((err) => console.log(err))
+	}
+	
+	function handleAddPlaceSubmit(name, link) {
+		api.addNewCard(name, link)
+			.then((res) => {
+				setCards([res, ...cards]);
 				closeAllPopups();
 			})
 			.catch((err) => console.log(err))
@@ -137,34 +146,11 @@ export default function App() {
 					onClose={closeAllPopups}
 					onUpdateUser={handleUpdateUser}
 				/>
-				<PopupWithForm
-					name="card"
-					title="Новое место"
+				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
-					buttonText="Создать"
-				>
-					<input
-						type="text"
-						className="popup__input popup__input_value_title"
-						id="title-input"
-						name="name"
-						placeholder="Название"
-						required
-						minLength="2"
-						maxLength="30"
-					/>
-					<span className="title-input-error"></span>
-					<input
-						type="url"
-						className="popup__input popup__input_value_link"
-						id="link-input"
-						name="link"
-						placeholder="Ссылка на картинку"
-						required
-					/>
-					<span className="link-input-error"></span>
-				</PopupWithForm>
+					onAddPlace={handleAddPlaceSubmit}
+				/>
 				
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
@@ -175,8 +161,6 @@ export default function App() {
 				<PopupWithForm
 					name="confirmation"
 					title="Вы уверены?"
-					// isOpen={}
-					// onClose={}
 				/>
 				<ImagePopup
 					name="image"

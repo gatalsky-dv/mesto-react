@@ -20,7 +20,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 		// Передаём значения управляемых компонентов во внешний обработчик
 		onUpdateUser({
 			name,
-			about
+			about,
 		});
 	}
 	
