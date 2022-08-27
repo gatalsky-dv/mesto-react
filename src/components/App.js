@@ -102,22 +102,18 @@ export default function App() {
 	
 	function handleEditProfileClick() {
 		setIsEditProfilePopupOpen(true);
-		document.addEventListener('keydown', handleEscClose);
 	}
 	
 	function handleAddPlaceClick() {
 		setIsAddPlacePopupOpen(true);
-		document.addEventListener('keydown', handleEscClose);
 	}
 	
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
-		document.addEventListener('keydown', handleEscClose);
 	}
 	
 	function handleCardClick(card) {
 		setSelectedCard(card);
-		document.addEventListener('keydown', handleEscClose);
 	}
 	
 	function closeAllPopups() {
